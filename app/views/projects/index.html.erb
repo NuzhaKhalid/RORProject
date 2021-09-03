@@ -1,0 +1,23 @@
+<nav class="navbar navbar-light fixed-top", style="background-color: #FFE4C4">
+  <a class="navbar-brand" style="color: gray; background:none">Bug Tracking System</a>
+  <%= button_to "logout", destroy_user_session_path, method: :delete, class:"btn btn-light", style:"font-size: 15px"  %>
+</nav>
+
+<h2 class="card-title d-flex justify-content-between mb-4 mt-5">
+  <span>Projects</span>
+
+  <% if can? :create, @project %>
+    <%= link_to 'New Project', new_project_path, class: 'btn btn-primary', style: 'color:white; font-size:15px' %>
+  <%end %>
+</h2>
+<% @projects.each do |project| %>
+  <%= link_to project, class: 'text-decoration-none' do%>
+    <div class="card project-card">
+      <div class="card-body">
+          <h5 class="card-title text-dark"><%= project.name %></h5>
+          <p class="text-secondary"><%= project.description %></p>
+
+      </div>
+    </div>
+  <%end %>
+<% end %>

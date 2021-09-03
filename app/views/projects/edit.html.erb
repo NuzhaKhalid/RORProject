@@ -1,0 +1,61 @@
+<%= link_to 'Back', @project, class: 'btn btn-secondary mb-4' , style: ' color:white' %>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title mb-5">Editing Project</h2>
+    <%= form_for(@project) do |form| %>
+      <% if @project.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+          <ul>
+            <% @project.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="field form-group">
+        <%= form.label :name, style:'font-weight:430; font-size:16px' %>
+        <%= form.text_field :name, class: 'form-control' %>
+      </div>
+
+      <div class="field  form-group">
+        <%= form.label :description, style:'font-weight:430; font-size:16px' %>
+        <%= form.text_area :description,  class: 'form-control' %>
+      </div>
+      <div class="field">
+        <%= form.label :users,style:'font-weight:430; font-size:16px' %>
+        <table class="card-table table">
+          <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">User Type</th>
+          </tr>
+          </thead>
+        <% for user in User.all %>
+
+              <tr>
+                <td><%= check_box_tag "projects_users[user_id][]", user.id, @project.users.include?(user)%></td>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.user_type %></td>
+              </tr>
+              <%end %>
+        </table>
+      </div>
+
+      <div class="actions mt-6">
+        <%= form.submit class: 'btn btn-primary mt-1'%>
+      </div>
+    <% end %>
+
+
+
+  </div>
+</div>
+
+
+

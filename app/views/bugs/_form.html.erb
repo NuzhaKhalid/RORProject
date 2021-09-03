@@ -1,0 +1,34 @@
+<%= form_with(model: [@bug.project, @bug]) do |f| %>
+  <% if @bug.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bug.errors.count, "error") %> prohibited this bug from being saved:</h2>
+
+      <ul>
+      <% @bug.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title , style:'font-size:17px; font-weight:400'%>
+    <%= f.text_field :title, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :status, style:'font-size:17px; font-weight:400' %>
+    <%= f.select :status, Bug::STATUS_OPTIONS , {}, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :bug_type, style:'font-size:17px; font-weight:400' %>
+    <%= f.select :bug_type, Bug::TYPE_OPTIONS , {}, class: 'form-control'%>
+  </div>
+  <div class="form-group">
+    <%= f.label :deadline,  style:'font-size:18px; font-weight:400' %>
+    <%= f.datetime_select :deadline ,  class: 'form-control'%>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: 'btn btn-primary mt-3'%>
+  </div>
+<% end %>

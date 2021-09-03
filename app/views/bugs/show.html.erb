@@ -1,0 +1,38 @@
+
+
+<%= link_to 'Back', @bug.project, class: 'btn btn-light mb-3' %>
+
+<div class="card">
+
+  <div class="card-body">
+    <h2 class="card-title d-flex justify-content-between mb-4">
+      <span>
+        <p>
+          <b>Title:</b>
+          <%= @bug.title %>
+        </p>
+
+        <p>
+          <b>Status:</b>
+          <%= @bug.status %>
+        </p>
+
+        <p>
+          <b>Bug Type:</b>
+          <%= @bug.bug_type %>
+        </p>
+
+        <p>
+          <b>Deadline:</b>
+          <%= @bug.deadline %>
+        </p>
+      </span>
+      <div>
+        <%= link_to 'Edit', edit_project_bug_path(@bug.project, @bug) , class: 'btn btn-warning', style: 'color:white;'%>
+        <%= link_to 'Delete', [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-danger', style: 'color:white;'%>
+
+      </div>
+    </h2>
+
+  </div>
+</div>

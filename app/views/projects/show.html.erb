@@ -1,0 +1,87 @@
+<nav class="navbar fixed-top", style="background-color: #FFE4C4">
+  <a class="navbar-brand" style="color: gray;">Bug Tracking System</a>
+  <%= button_to "logout", destroy_user_session_path, method: :delete, class:"btn btn-light", style:"font-size: 15px"  %>
+</nav>
+
+<%= link_to 'Back', projects_path, class: 'btn btn-secondary mb-4' , style: ' color:white' %>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title d-flex justify-content-between mb-4">
+      <span><%= @project.name %></span>
+      <div>
+        <% if can? :update, @project %>
+          <%= link_to 'Edit', edit_project_path(@project),  class: 'btn btn-warning', style: 'color:white;' %></td>
+        <%end %>
+        <% if can? :delete, @project %>
+          <%= link_to 'Delete', @project, method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-danger', style: 'color:white;'%>
+        <%end %>
+      </div>
+    </h2>
+    <p>
+      <strong>Description:</strong>
+      <%= @project.description %>
+    </p>
+
+    <p>
+      <strong>Users:</strong>
+
+      <!--%= @project.users.group("user_id").count.count %-->
+
+
+    <table class="card-table table">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">User Type</th>
+      </tr>
+      </thead>
+      <% @project.users.each do |user_in| %>
+        <% if user_in.persisted? %>
+          <tr>
+            <td><%= user_in.name %></td>
+            <td><%= user_in.email %></td>
+            <td><%= user_in.user_type %></td>
+          </tr>
+        <%end %>
+      <% end %>
+    </table>
+    </p>
+  </div>
+</div>
+
+<hr>
+
+<div class="card">
+  <h2 class="card-header d-flex justify-content-between">
+    <span>Listing bugs</span>
+    <% if can? :create, @bug %>
+      <div> <%= link_to 'Add New Bug', new_project_bug_path(@project.id), class: 'btn btn-primary', style: 'color:white;' %></div>
+    <%end %>
+  </h2>
+  <table class="card-table table">
+      <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Status</th>
+      <th scope="col">Bug Type</th>
+      <th scope="col">Deadline</th>
+    </tr>
+    </thead>
+
+    <% @project.bugs.each do |bug| %>
+      <% if bug.persisted? %>
+        <tr>
+          <td><%= bug.title %></td>
+          <td><%= bug.status %></td>
+          <td><%= bug.bug_type %></td>
+          <td><%= bug.deadline %></td>
+          <td><%= link_to 'Open', [bug.project, bug], style: 'background-color: white; color: blue' %></td>
+        </tr>
+      <%end %>
+    <% end %>
+  </table>
+</div>
+
+
