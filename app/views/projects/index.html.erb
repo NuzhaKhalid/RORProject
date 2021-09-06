@@ -1,5 +1,5 @@
-<nav class="navbar navbar-light fixed-top", style="background-color: #FFE4C4">
-  <a class="navbar-brand" style="color: gray; background:none">Bug Tracking System</a>
+<nav class="navbar navbar-light fixed-top", style="background-color: slategray">
+  <a class="navbar-brand" style="color: white; background:none">Bug Tracking System</a>
   <%= button_to "logout", destroy_user_session_path, method: :delete, class:"btn btn-light", style:"font-size: 15px"  %>
 </nav>
 
@@ -16,7 +16,6 @@
       <div class="card-body">
           <h5 class="card-title text-dark"><%= project.name %></h5>
           <p class="text-secondary"><%= project.description %></p>
-
       </div>
     </div>
   <%end %>

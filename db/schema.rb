@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_02_180400) do
+ActiveRecord::Schema.define(version: 2021_09_06_034236) do
 
   create_table "bugs", force: :cascade do |t|
     t.string "title"
@@ -20,8 +20,11 @@ ActiveRecord::Schema.define(version: 2021_09_02_180400) do
     t.integer "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.string "screenshot"
     t.index ["project_id"], name: "index_bugs_on_project_id"
     t.index ["title", "project_id"], name: "uniq_bugs_per_project", unique: true
+    t.index ["user_id"], name: "index_bugs_on_user_id"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -56,6 +59,7 @@ ActiveRecord::Schema.define(version: 2021_09_02_180400) do
   end
 
   add_foreign_key "bugs", "projects"
+  add_foreign_key "bugs", "users"
   add_foreign_key "projects_users", "projects"
   add_foreign_key "projects_users", "users"
 end

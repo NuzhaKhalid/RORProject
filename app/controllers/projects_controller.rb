@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+
+  load_and_authorize_resource :only => [:new, :edit, :destroy]
+
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects or /projects.json
@@ -14,6 +17,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @project = current_user.projects.build
+    #authorize if can? :create, @project
   end
 
   # GET /projects/1/edit
@@ -51,7 +55,6 @@ class ProjectsController < ApplicationController
             User.find(u).projects << Project.find(@project.id)
           end
         end
-        puts "THIS IS UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU#{p}"
         for record in ProjectsUser.all
           if record.project_id == @project.id
             found = 0
@@ -78,6 +81,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
+
     @project.destroy
     respond_to do |format|
       format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }

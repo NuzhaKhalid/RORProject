@@ -1,7 +1,7 @@
 class BugsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project
-  before_action :set_bug, only: [:show, :edit, :update, :destroy]
+  before_action :set_bug, only: [:show, :edit, :update, :destroy, :assign]
 
   # GET projects/1/bugs
   def index
@@ -46,6 +46,14 @@ class BugsController < ApplicationController
     end
   end
 
+  def assign
+    puts "////////////////////////////////////////////////////////////////////////"
+    @bug.update_attribute(:user, current_user)
+    puts "////////////////////////////////////////////////////////////////#{current_user}"
+    redirect_to(@bug)
+
+  end
+
   # DELETE projects/1/bugs/1
   def destroy
     @bug.destroy
@@ -65,6 +73,6 @@ class BugsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def bug_params
-      params.require(:bug).permit(:title, :status, :bug_type, :deadline, :project_id)
+      params.require(:bug).permit(:title, :status, :bug_type, :deadline, :project_id, :user_id, :screenshot)
     end
 end

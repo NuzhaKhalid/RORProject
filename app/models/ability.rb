@@ -1,6 +1,7 @@
 class Ability
   include CanCan::Ability
 
+
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
@@ -8,10 +9,9 @@ class Ability
        if user.user_type == 'manager'
          can :manage, :all
        elsif user.user_type == 'qa'
-         can :manage, :Bug
+         can :read, :all
        else
          can :read, :all
-         can :update, :Bug
        end
     #
     # The first argument to `can` is the action you are giving the user 

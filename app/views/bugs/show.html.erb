@@ -26,11 +26,26 @@
           <b>Deadline:</b>
           <%= @bug.deadline %>
         </p>
+        <p>
+          <b>Assigned To:</b>
+          <%= @bug.user_id%>
+        </p>
+        <p>
+          <b>Screenshot:</b>
+          <div>
+          <%= image_tag @bug.screenshot_url(:thumb).to_s %>
+            </div>
+        </p>
+
       </span>
       <div>
-        <%= link_to 'Edit', edit_project_bug_path(@bug.project, @bug) , class: 'btn btn-warning', style: 'color:white;'%>
-        <%= link_to 'Delete', [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-danger', style: 'color:white;'%>
-
+        <% if current_user.user_type == 'qa' %>
+          <%= link_to 'Edit', edit_project_bug_path(@bug.project, @bug) , class: 'btn btn-warning', style: 'color:white;'%>
+          <%= link_to 'Delete', [@bug.project, @bug], method: :delete, data: { confirm: 'Are you sure?' },  class: 'btn btn-danger', style: 'color:white;'%>
+        <%end %>
+        <% if current_user.user_type == 'developer' %>
+          <%= link_to 'Assign To Me', assign_project_bugs_url(@bug.project, @bug), class: 'btn btn-primary', style: 'color:white;'%>
+        <%end %>
       </div>
     </h2>
 

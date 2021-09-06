@@ -5,8 +5,14 @@ Rails.application.routes.draw do
   namespace :project do
     resources :bugs
   end
+  resources :projects do
+    resources :bugs do
+      collection do
+        get :assign
+      end
+    end
+  end
 
-  get "/projects/:project_id/listusers", to: "projects#listusers"
   devise_for :users
   root to: "projects#index"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
